@@ -1,0 +1,1 @@
+# akeyless-dynamic-secret-aws
