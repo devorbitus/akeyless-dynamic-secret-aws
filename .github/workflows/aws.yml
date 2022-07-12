@@ -6,6 +6,9 @@ on:
   push:
     branches:
       - main
+env:
+  AWS_REGION: us-east-1
+
 jobs:
   fetch_some_secrets:
     runs-on: ubuntu-latest
