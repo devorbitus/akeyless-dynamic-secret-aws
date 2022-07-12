@@ -43,11 +43,12 @@ jobs:
       #     role-to-assume: arn:aws:iam::980459274626:role/my-github-actions-role-cg
       #     aws-region: us-east-1
 
-      - name: Login to PROD AWS ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
+      # - name: Login to PROD AWS ECR
+      #   id: login-ecr
+      #   uses: aws-actions/amazon-ecr-login@v1
 
       - name: Describe ECR
         run: |
-          aws ecr describe-repositories --repository-names cg-test > describe-ecr.json
+
+          aws ecr describe-repositories --repository-names cg-test --region us-east-1 > describe-ecr.json
           cat describe-ecr.json
