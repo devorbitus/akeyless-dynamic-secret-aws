@@ -20,7 +20,7 @@ jobs:
         with:
           access-id: p-qchvfq9ofg4z
           # we use a JSON string because Github actions don't support dictionaries as inputs
-          producer-for-aws-access: '/AWS - ECR - Describe Assume Role'
+          producer-for-aws-access: '/AWS - ECR - Describe'
           # static-secrets: '{"/path/to/static/secret":"output_name"}'
           #dynamic-secrets: '{"/path/to/dynamic/secret":"another_output_name"}'
           # these are true by default, but left here for reference
@@ -34,11 +34,11 @@ jobs:
           echo "access_key length: $akl"
           echo " access_secret_key length: $askl"
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          role-to-assume: arn:aws:iam::980459274626:role/my-github-actions-role-cg
-          aws-region: us-east-1
+      # - name: Configure AWS Credentials
+      #   uses: aws-actions/configure-aws-credentials@v1
+      #   with:
+      #     role-to-assume: arn:aws:iam::980459274626:role/my-github-actions-role-cg
+      #     aws-region: us-east-1
 
       - name: Login to PROD AWS ECR
         id: login-ecr
