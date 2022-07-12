@@ -29,13 +29,6 @@ jobs:
           # these are true by default, but left here for reference
           export-secrets-to-outputs: true
           export-secrets-to-environment: true
-          
-      - name: Display fetched secrets
-        run: |
-          export akl=`wc -m ${{ secrets.AWS_ACCESS_KEY_ID }}`
-          export askl=`wc -m ${{ secrets.AWS_SECRET_ACCESS_KEY }}`
-          echo "access_key length: $akl"
-          echo " access_secret_key length: $askl"
 
       # - name: Configure AWS Credentials
       #   uses: aws-actions/configure-aws-credentials@v1
