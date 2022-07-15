@@ -48,8 +48,8 @@ jobs:
           aws_access_key_id = $AWS_ACCESS_KEY_ID
           aws_secret_access_key = $AWS_SECRET_ACCESS_KEY
           EOF
-          echo "AWS Key ID Length $(wc -l $AWS_ACCESS_KEY_ID)"
-          echo "AWS Key Secret Length $(wc -l $AWS_SECRET_ACCESS_KEY)"
+          echo "AWS Key ID Length $(echo $AWS_ACCESS_KEY_ID | wc -c)"
+          echo "AWS Key Secret Length $(echo $AWS_SECRET_ACCESS_KEY | wc -c)"
           wc -l "$AWS_SECRET_ACCESS_KEY"
           cat aws_config
           export AWS_CONFIG_FILE=aws_config
