@@ -17,18 +17,18 @@ jobs:
       contents: read
     name: Fetch some static secrets
     steps:
-      - name: Fetch secrets from AKeyless
-        id: fetch-secrets
-        uses: cmancone/akeyless-action@v1.0.0
-        with:
-          access-id: p-qchvfq9ofg4z
-          # we use a JSON string because Github actions don't support dictionaries as inputs
-          producer-for-aws-access: '/AWS - ECR - Describe'
-          # static-secrets: '{"/path/to/static/secret":"output_name"}'
-          #dynamic-secrets: '{"/path/to/dynamic/secret":"another_output_name"}'
-          # these are true by default, but left here for reference
-          export-secrets-to-outputs: true
-          export-secrets-to-environment: true
+      # - name: Fetch secrets from AKeyless
+      #   id: fetch-secrets
+      #   uses: cmancone/akeyless-action@v1.0.0
+      #   with:
+      #     access-id: p-qchvfq9ofg4z
+      #     # we use a JSON string because Github actions don't support dictionaries as inputs
+      #     producer-for-aws-access: '/AWS - ECR - Describe'
+      #     # static-secrets: '{"/path/to/static/secret":"output_name"}'
+      #     #dynamic-secrets: '{"/path/to/dynamic/secret":"another_output_name"}'
+      #     # these are true by default, but left here for reference
+      #     export-secrets-to-outputs: true
+      #     export-secrets-to-environment: true
 
       # - name: Configure AWS Credentials
       #   uses: aws-actions/configure-aws-credentials@v1
@@ -42,6 +42,10 @@ jobs:
 
       - name: Describe ECR
         run: |
+          curl -o akeyless https://akeyless-cli.s3.us-east-2.amazonaws.com/cli/latest/production/cli-linux-amd64
+          chmod +x akeyless
+          ./akeyless auth --access-id=p-qchvfq9ofg4z --access-type=jwt --jwt $ACTIONS_ID_TOKEN_REQUEST_TOKEN > auth.json
+          cat auth.json
           aws sts get-session-token > aws-sess.json
           echo "Access Key ID: $(cat aws-sess.json | jq -r .Credentials.AccessKeyId)"
           echo "Masking Secret Access Key : ::add-mask::$(cat aws-sess.json | jq -r .Credentials.SecretAccessKey)"
