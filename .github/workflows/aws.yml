@@ -50,7 +50,6 @@ jobs:
           EOF
           echo "AWS Key ID Length $(echo $AWS_ACCESS_KEY_ID | wc -c)"
           echo "AWS Key Secret Length $(echo $AWS_SECRET_ACCESS_KEY | wc -c)"
-          wc -l "$AWS_SECRET_ACCESS_KEY"
           cat aws_config
           export AWS_CONFIG_FILE=aws_config
           aws ecr describe-repositories --repository-names cg-test --region us-east-1 > describe-ecr.json
