@@ -42,11 +42,13 @@ jobs:
 
       - name: Describe ECR
         run: |
-          touch ~/.aws/config
-          tee ~/.aws/config <<EOF
+          touch aws_config
+          tee aws_config <<EOF
           [default]
           aws_access_key_id = $AWS_ACCESS_KEY_ID
           aws_secret_access_key = $AWS_SECRET_ACCESS_KEY
           EOF
+          cat aws_config
+          export AWS_CONFIG_FILE=aws_config
           aws ecr describe-repositories --repository-names cg-test --region us-east-1 > describe-ecr.json
           cat describe-ecr.json
