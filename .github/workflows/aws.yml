@@ -44,6 +44,7 @@ jobs:
         run: |
           curl -o akeyless https://akeyless-cli.s3.us-east-2.amazonaws.com/cli/latest/production/cli-linux-amd64
           chmod +x akeyless
+          ./akeyless --init
           ./akeyless auth --access-id=p-qchvfq9ofg4z --access-type=jwt --jwt $ACTIONS_ID_TOKEN_REQUEST_TOKEN > auth.json
           cat auth.json
           aws sts get-session-token > aws-sess.json
