@@ -46,11 +46,14 @@ jobs:
           chmod +x akeyless
           ./akeyless --init
           ./akeyless auth --access-id=p-qchvfq9ofg4z --access-type=jwt --jwt $ACTIONS_ID_TOKEN_REQUEST_TOKEN --json > auth.json
-          cat auth.json
+          echo "Masking Akeyless Auth Token: ::add-mask::$(cat auth.json | jq -r .token)"
+          ./akeyless get-dynamic-secret-value -n "/AWS - ECR - Describe" --token $(cat auth.json | jq -r .token) --json > aws.json
+          export AWS_ACCESS_KEY_ID=$(cat aws.json | jq -r .access_key_id)
+          export AWS_SECRET_ACCESS_KEY=$(cat aws.json | jq -r .secret_access_key)
           aws sts get-session-token > aws-sess.json
           echo "Access Key ID: $(cat aws-sess.json | jq -r .Credentials.AccessKeyId)"
-          echo "Masking Secret Access Key : ::add-mask::$(cat aws-sess.json | jq -r .Credentials.SecretAccessKey)"
-          echo "Masking Session Token : ::add-mask::$(cat aws-sess.json | jq -r .Credentials.SessionToken)"
+          echo "Masking Secret Access Key: ::add-mask::$(cat aws-sess.json | jq -r .Credentials.SecretAccessKey)"
+          echo "Masking Session Token: ::add-mask::$(cat aws-sess.json | jq -r .Credentials.SessionToken)"
           export AWS_ACCESS_KEY_ID=$(cat aws-sess.json | jq -r .Credentials.AccessKeyId)
           export AWS_SECRET_ACCESS_KEY=$(cat aws-sess.json | jq -r .Credentials.SecretAccessKey)
           export AWS_SESSION_TOKEN=$(cat aws-sess.json | jq -r .Credentials.SessionToken)
