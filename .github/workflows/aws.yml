@@ -56,6 +56,7 @@ jobs:
           aws_secret_access_key=$(cat aws.json | jq -r .secret_access_key)
           EOF
           cat aws_config
+          export AWS_CONFIG_FILE=aws_config
           aws sts get-session-token > aws-sess.json
           echo "Access Key ID: $(cat aws-sess.json | jq -r .Credentials.AccessKeyId)"
           echo "Masking Secret Access Key: ::add-mask::$(cat aws-sess.json | jq -r .Credentials.SecretAccessKey)"
